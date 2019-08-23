@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Bingo.Repositories;
+using Bingo.Repositories.Interfaces;
 
 namespace Bingo
 {
@@ -33,6 +36,13 @@ namespace Bingo
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=Bingo;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<BingoDbContext>
+                (options => options.UseSqlServer(connection));
+
+            services.AddScoped<INumberRepository, NumberRepository>();
+            services.AddScoped<IBingoNumberRepository, BingoNumberRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
