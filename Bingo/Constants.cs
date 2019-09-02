@@ -7,6 +7,7 @@ namespace Bingo
 {
     public class Constants
     {
-        public static int MaxBingoNumbers = 10;
+        public static int MaxBingoNumbers = 90;
+        public static int TotalBingoNumbers = 4;
     }
 }

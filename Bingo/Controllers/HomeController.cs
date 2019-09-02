@@ -46,15 +46,19 @@ namespace Bingo.Controllers
         public async Task<IActionResult> NewNumber()
         {
             var usedNumbers = _bingoNumberRepository.GetUsedNumbers();
+            for (int i = 1; i < Constants.TotalBingoNumbers+1; i++)
+            {
+                var range = Enumerable.Range(1, Constants.MaxBingoNumbers).Where(x => !usedNumbers.Contains(x));
+                var random = new Random();
+                int index = random.Next(0, Constants.MaxBingoNumbers - usedNumbers.Count);
+                var newNumber = range.ElementAt(index);
 
-            var range = Enumerable.Range(1, Constants.MaxBingoNumbers).Where(i => !usedNumbers.Contains(i));
-            var random = new Random();
-            int index = random.Next(0, Constants.MaxBingoNumbers - usedNumbers.Count);
-            var newNumber = range.ElementAt(index);
+                await _bingoNumberRepository.SetNumberToUsed(newNumber);
 
-            await _bingoNumberRepository.SetNumberToUsed(newNumber);
+                await _numberRepository.SetNumber(newNumber, i);
 
-            await _numberRepository.SetNumber(newNumber);
+                usedNumbers.Add(newNumber);
+            }
 
             return RedirectToAction("Admin");
         }

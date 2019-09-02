@@ -18,7 +18,7 @@ namespace Bingo.Repositories
 
         public List<BingoNumber> GetAll()
         {
-            var numbers = _context.BingoNumbers.ToList();
+            var numbers = _context.BingoNumbers.OrderBy(x => x.Value).ToList();
             return numbers;
         }
         public List<int> GetUsedNumbers()
