@@ -24,6 +24,7 @@ namespace Bingo.Controllers
         {
             var numbers = _numberRepository.GetAll();
             var model = new NumberModel { Numbers = numbers };
+            Response.Headers.Add("Refresh", "5");
             return View(model);
         }
 
