@@ -3,11 +3,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-3">
-        @foreach (var number in Model.Numbers)
-        {
-            <h1>@number</h1>
-        }
-    </div>
+
+<div class="row align-items-center">
+    @foreach (var number in Model.Numbers)
+    {
+        <div class="col-sm-3">
+
+            @number
+        </div>
+    }
 </div>
